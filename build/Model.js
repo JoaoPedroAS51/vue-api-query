@@ -46,6 +46,8 @@ var Model = /*#__PURE__*/function (_StaticModel) {
       _this._builder = new _Builder["default"]((0, _assertThisInitialized2["default"])(_this));
     } else {
       Object.assign.apply(Object, [(0, _assertThisInitialized2["default"])(_this)].concat(attributes));
+
+      _this._applyRelations((0, _assertThisInitialized2["default"])(_this));
     }
 
     if (_this.baseURL === undefined) {
@@ -313,8 +315,6 @@ var Model = /*#__PURE__*/function (_StaticModel) {
       if (this._fromResource) {
         item._from(this._fromResource);
       }
-
-      this._applyRelations(item);
 
       return item;
     }
