@@ -2,11 +2,22 @@
  * Prepare attributes to be parsed
  */
 
-import Parser from './Parser';
+import Model from './Model'
+import Parser from './Parser'
 
 export default class Builder {
+  public model: Model<boolean, boolean>
+  public includes: unknown[]
+  public appends: unknown[]
+  public sorts: unknown[]
+  public pageValue: number | null
+  public limitValue: number | null
+  public payload: Record<string, unknown> | null
+  public fields: Record<string, unknown>
+  public filters: Record<string, unknown>
+  public parser: Parser
 
-  constructor(model) {
+  constructor(model: Model<boolean, boolean>) {
     this.model = model
     this.includes = []
     this.appends = []
@@ -21,8 +32,8 @@ export default class Builder {
     this.parser = new Parser(this)
   }
 
-  // query string parsed 
-  query() {
+  // query string parsed
+  query(): string {
     return this.parser.query()
   }
 
@@ -30,30 +41,30 @@ export default class Builder {
    * Query builder
    */
 
-  include(...args) {
+  include(...args: unknown[]): this {
     this.includes = args
 
     return this
   }
 
-  append(...args) {
+  append(...args: unknown[]): this {
     this.appends = args
 
     return this
   }
 
-  select(...fields) {
+  select(...fields: (string | { [p: string]: string[] })[]): this {
     if (fields.length === 0) {
       throw new Error('You must specify the fields on select() method.')
     }
 
     // single entity .select(['age', 'firstname'])
-    if (fields[0].constructor === String || Array.isArray(fields[0])) {
+    if (typeof fields[0] === 'string' || Array.isArray(fields[0])) {
       this.fields[this.model.resource()] = fields.join(',')
     }
 
     // related entities .select({ posts: ['title', 'content'], user: ['age', 'firstname']} )
-    if (fields[0].constructor === Object) {
+    if (typeof fields[0] === 'object') {
       Object.entries(fields[0]).forEach(([key, value]) => {
         this.fields[key] = value.join(',')
       })
@@ -62,7 +73,7 @@ export default class Builder {
     return this
   }
 
-  where(key, value) {
+  where(key: string, value: unknown): this {
     if (key === undefined || value === undefined)
       throw new Error('The KEY and VALUE are required on where() method.')
 
@@ -74,22 +85,24 @@ export default class Builder {
     return this
   }
 
-  whereIn(key, array) {
+  whereIn(key: string, array: unknown[]): this {
     if (!Array.isArray(array))
-      throw new Error('The second argument on whereIn() method must be an array.')
+      throw new Error(
+        'The second argument on whereIn() method must be an array.'
+      )
 
     this.filters[key] = array.join(',')
 
     return this
   }
 
-  orderBy(...args) {
+  orderBy(...args: unknown[]): this {
     this.sorts = args
 
     return this
   }
 
-  page(value) {
+  page(value: number): this {
     if (!Number.isInteger(value)) {
       throw new Error('The VALUE must be an integer on page() method.')
     }
@@ -99,7 +112,7 @@ export default class Builder {
     return this
   }
 
-  limit(value) {
+  limit(value: number): this {
     if (!Number.isInteger(value)) {
       throw new Error('The VALUE must be an integer on limit() method.')
     }
@@ -109,7 +122,7 @@ export default class Builder {
     return this
   }
 
-  params(payload) {
+  params(payload: Record<string, unknown>): this {
     if (payload === undefined || payload.constructor !== Object) {
       throw new Error('You must pass a payload/object as param.')
     }

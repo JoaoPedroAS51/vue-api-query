@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import BaseModel from './BaseModel'
 
-export default class ModelWithParamNames extends BaseModel {
-
-  parameterNames () {
+export default class ModelWithParamNames extends BaseModel<false, false> {
+  parameterNames() {
     return {
       include: 'include_custom',
       filter: 'filter_custom',
@@ -13,5 +14,4 @@ export default class ModelWithParamNames extends BaseModel {
       limit: 'limit_custom'
     }
   }
-
 }
