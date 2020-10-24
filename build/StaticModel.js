@@ -1,141 +1,79 @@
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports["default"] = void 0;
-
-var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
-
-var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
-
-/**
- *  Provide static calls for all methods.
- *
- *  Instead this: let users = new User().with('country').get()
- *  We can do this: let users = User.with('conutry').get()
- *
- */
-var StaticModel = /*#__PURE__*/function () {
-  function StaticModel() {
-    (0, _classCallCheck2["default"])(this, StaticModel);
-  }
-
-  (0, _createClass2["default"])(StaticModel, null, [{
-    key: "instance",
-    value: function instance() {
-      return new this();
+export default class StaticModel {
+    static instance() {
+        return new this();
     }
-  }, {
-    key: "include",
-    value: function include() {
-      var self = this.instance();
-      self.include.apply(self, arguments);
-      return self;
+    static include(...args) {
+        const self = this.instance();
+        self.include(...args);
+        return self;
     }
-  }, {
-    key: "append",
-    value: function append() {
-      var self = this.instance();
-      self.append.apply(self, arguments);
-      return self;
+    static append(...args) {
+        const self = this.instance();
+        self.append(...args);
+        return self;
     }
-  }, {
-    key: "select",
-    value: function select() {
-      var self = this.instance();
-      self.select.apply(self, arguments);
-      return self;
+    static select(...fields) {
+        const self = this.instance();
+        self.select(...fields);
+        return self;
     }
-  }, {
-    key: "where",
-    value: function where(field, value) {
-      var self = this.instance();
-      self.where(field, value);
-      return self;
+    static where(field, value) {
+        const self = this.instance();
+        self.where(field, value);
+        return self;
     }
-  }, {
-    key: "whereIn",
-    value: function whereIn(field, array) {
-      var self = this.instance();
-      self.whereIn(field, array);
-      return self;
+    static whereIn(field, array) {
+        const self = this.instance();
+        self.whereIn(field, array);
+        return self;
     }
-  }, {
-    key: "orderBy",
-    value: function orderBy() {
-      var self = this.instance();
-      self.orderBy.apply(self, arguments);
-      return self;
+    static orderBy(...args) {
+        const self = this.instance();
+        self.orderBy(...args);
+        return self;
     }
-  }, {
-    key: "page",
-    value: function page(value) {
-      var self = this.instance();
-      self.page(value);
-      return self;
+    static page(value) {
+        const self = this.instance();
+        self.page(value);
+        return self;
     }
-  }, {
-    key: "limit",
-    value: function limit(value) {
-      var self = this.instance();
-      self.limit(value);
-      return self;
+    static limit(value) {
+        const self = this.instance();
+        self.limit(value);
+        return self;
     }
-  }, {
-    key: "custom",
-    value: function custom() {
-      var self = this.instance();
-      self.custom.apply(self, arguments);
-      return self;
+    static custom(...args) {
+        const self = this.instance();
+        self.custom(...args);
+        return self;
     }
-  }, {
-    key: "params",
-    value: function params(payload) {
-      var self = this.instance();
-      self.params(payload);
-      return self;
+    static params(payload) {
+        const self = this.instance();
+        self.params(payload);
+        return self;
     }
-  }, {
-    key: "first",
-    value: function first() {
-      var self = this.instance();
-      return self.first();
+    static first() {
+        const self = this.instance();
+        return self.first();
     }
-  }, {
-    key: "$first",
-    value: function $first() {
-      var self = this.instance();
-      return self.$first();
+    static $first() {
+        const self = this.instance();
+        return self.$first();
     }
-  }, {
-    key: "find",
-    value: function find(id) {
-      var self = this.instance();
-      return self.find(id);
+    static find(identifier) {
+        const self = this.instance();
+        return self.find(identifier);
     }
-  }, {
-    key: "$find",
-    value: function $find(id) {
-      var self = this.instance();
-      return self.$find(id);
+    static $find(identifier) {
+        const self = this.instance();
+        return self.$find(identifier);
     }
-  }, {
-    key: "get",
-    value: function get() {
-      var self = this.instance();
-      return self.get();
+    static get() {
+        const self = this.instance();
+        return self.get();
     }
-  }, {
-    key: "$get",
-    value: function $get() {
-      var self = this.instance();
-      return self.$get();
+    static $get() {
+        const self = this.instance();
+        return self.$get();
     }
-  }]);
-  return StaticModel;
-}();
-
-exports["default"] = StaticModel;
+}
