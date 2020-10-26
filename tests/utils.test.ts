@@ -113,6 +113,7 @@ describe('Utilities', () => {
     setProp(foo, ['x', '0', 'z'], 123)
 
     expect(foo).toStrictEqual({ x: [{ z: 123 }] })
+    // @ts-ignore
     expect(Array.isArray(foo.x)).toBeTruthy()
   })
 
@@ -122,6 +123,7 @@ describe('Utilities', () => {
     setProp(foo, ['x', '1', 'z'], 123)
 
     expect(foo).toEqual({ x: [undefined, { z: 123 }] })
+    // @ts-ignore
     expect(Array.isArray(foo.x)).toBeTruthy()
   })
 
@@ -131,6 +133,7 @@ describe('Utilities', () => {
     setProp(foo, ['x', '10.0', 'z'], 123)
 
     expect(foo).toStrictEqual({ x: { '10.0': { z: 123 } } })
+    // @ts-ignore
     expect(Array.isArray(foo.x)).toBeFalsy()
   })
 
@@ -139,6 +142,7 @@ describe('Utilities', () => {
 
     setProp(foo, ['x', '10.2', 'z'], 123)
     expect(foo).toStrictEqual({ x: { '10.2': { z: 123 } } })
+    // @ts-ignore
     expect(Array.isArray(foo.x)).toBeFalsy()
   })
 
@@ -148,8 +152,10 @@ describe('Utilities', () => {
     // Create arrays instead of objects
     setProp(foo, 'e.0.0', 2)
 
+    // @ts-ignore
     expect(foo.e[0][0]).toStrictEqual(2)
     expect(foo).toStrictEqual({ a: 1, e: [[2]] })
+    // @ts-ignore
     expect(Array.isArray(foo.e)).toBeTruthy()
   })
 
@@ -169,7 +175,7 @@ describe('Utilities', () => {
       setProp(foo, 'a.b.c', 'hello')
     }
 
-    expect(error).toThrow('Cannot create property \'c\' on number \'123\'')
+    expect(error).toThrow("Cannot create property 'c' on number '123'")
 
     expect(foo.a.b).toStrictEqual(123)
     expect(foo).toStrictEqual({ a: { b: 123 } })
@@ -179,7 +185,7 @@ describe('Utilities', () => {
     const foo = { a: { b: { c: 123, d: { e: 5 } } } }
 
     // Preserve object tree, with array value
-    setProp(foo, 'a.b.d.z', [1,2,3,4])
+    setProp(foo, 'a.b.d.z', [1, 2, 3, 4])
 
     expect(foo.a.b.d).toStrictEqual({ e: 5, z: [1, 2, 3, 4] })
   })

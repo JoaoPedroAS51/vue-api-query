@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 import { Model } from '../../../src'
 
-export default class EmptyBaseModel extends Model {
-
-  static withBaseURL () {
+// @ts-ignore
+export default class EmptyBaseModel extends Model<false, false> {
+  static withBaseURL() {
     EmptyBaseModel.prototype['baseURL'] = () => {
       return 'foo'
     }
@@ -10,7 +12,8 @@ export default class EmptyBaseModel extends Model {
     return this
   }
 
-  static withRequest () {
+  static withRequest() {
+    // @ts-ignore
     EmptyBaseModel.prototype['request'] = () => {
       return 'foo'
     }
@@ -18,15 +21,19 @@ export default class EmptyBaseModel extends Model {
     return this
   }
 
-  static withHttp () {
+  static withHttp() {
+    // @ts-ignore
     Model.$http = 'foo'
 
     return this
   }
 
-  static reset () {
+  static reset() {
+    // @ts-ignore
     delete EmptyBaseModel.prototype['baseURL']
+    // @ts-ignore
     delete EmptyBaseModel.prototype['request']
+    // @ts-ignore
     Model.$http = undefined
 
     return this
